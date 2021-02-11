@@ -1,12 +1,8 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using tel_bot_net.Models;
 
 namespace tel_bot_net
 {
@@ -16,6 +12,11 @@ namespace tel_bot_net
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)// подключение веб сервисов
         {
+            services.
+                AddControllers().
+                AddNewtonsoftJson()
+                ; // добавляем контроллеры MVC
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -28,18 +29,16 @@ namespace tel_bot_net
                 app.UseDeveloperExceptionPage();
             }
 
-            // добавляем возможности маршрутизации
+            //добавляем возможности маршрутизации
             app.UseRouting();
 
             // устанавливаем адреса, которые будут обрабатываться
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-
-                    //await context.Response.WriteAsync("Hello World!");
-                });
+                endpoints.MapControllers();//маршрутизация на основе атрибутов
             });
+
+            Bot.GetBotClientAsync().Wait();// запускаем бота
 
         }
     }

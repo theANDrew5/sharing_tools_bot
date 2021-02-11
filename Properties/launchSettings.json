@@ -1,10 +1,14 @@
-﻿{
+{
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://localhost/tel_bot_net",
+      "sslPort": 0
+    },
     "iisExpress": {
-      "applicationUrl": "http://localhost:63658",
-      "sslPort": 44383
+      "applicationUrl": "http://localhost:443",
+      "sslPort": 0
     }
   },
   "profiles": {
@@ -17,12 +21,11 @@
     },
     "tel_bot_net": {
       "commandName": "Project",
-      "dotnetRunMessages": "true",
-      "launchBrowser": true,
-      "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "dotnetRunMessages": "true",
+      "applicationUrl": "https://localhost:443"
     }
   }
 }
