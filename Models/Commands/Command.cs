@@ -14,7 +14,10 @@ namespace tel_bot_net.Models.Commands
 
         public bool Contains(Message message)
         {
-            return message.Text.Contains(this.Name) && message.Text.Contains(AppSettings.Name);
+            if (message.Type != Telegram.Bot.Types.Enums.MessageType.Text)
+                return false;
+
+            return message.Text.Contains(this.Name); //&& message.Text.Contains(AppSettings.Name);
         }
     }
 }
