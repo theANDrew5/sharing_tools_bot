@@ -22,10 +22,12 @@ namespace tel_bot_net.Models
 
             //комманды добавлять сдесь
             commandList.Add(new StartCommand());
+            commandList.Add(new TestCommand());
 
             //
             botClient = new TelegramBotClient(AppSettings.Key);
-            string hook = string.Format(AppSettings.Url, "/api/message/update");//ссылка на тунель Ngrock + ссылка на путь контроллера
+            string hook = string.Format(AppSettings.Url, "/api/update");//ссылка на тунель Ngrock + ссылка на путь контроллера
+            //string hook2 = string.Format(AppSettings.Url,)
             await botClient.SetWebhookAsync(hook);
             return botClient;
         }

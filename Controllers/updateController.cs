@@ -12,20 +12,21 @@ using System.Linq;
 
 namespace tel_bot_net.Controllers
 {
-    [Route("api/message/update")]
+    [Route("api/update")]
     [ApiController]
-    public class MessageController : Controller
+    public class updateController : Controller
     {
         [HttpGet]
-        public string OnGet()
+        public IActionResult OnGet(string type, int id)
         {
-            return "Method GET unuvalable";
+            return Redirect("https://t.me/ToShar_bot");
         }
 
         [HttpPost]
-        public async Task<OkResult> update([FromBody]Update update)
+        public async Task<OkResult> update([FromBody] Update update)
         {
-            //if (update == null) return Ok();
+
+            if (update.Message == null) return Ok();
 
             var commands = Bot.Commands;
             var message = update.Message;
