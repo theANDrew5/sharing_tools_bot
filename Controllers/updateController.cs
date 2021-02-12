@@ -1,13 +1,9 @@
 ﻿//контроллер сообщений
 
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using tel_bot_net.Models;
 using Telegram.Bot.Types;
 using System.Threading.Tasks;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 
 namespace tel_bot_net.Controllers
