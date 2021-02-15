@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿
 using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
@@ -10,6 +8,8 @@ namespace tel_bot_net.Models.Commands
     public class TestCommand : Command
     {
         public override string Name => "/test";
+
+        public override string Description => "Test command";
 
         public override async Task Execute(Message message, TelegramBotClient client)
         {

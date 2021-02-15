@@ -10,6 +10,8 @@ namespace tel_bot_net.Models.Commands
     {
         public abstract string Name { get; }
 
+        public abstract string Description { get; }
+
         public abstract Task Execute(Message message, TelegramBotClient client);
 
         public bool Contains(Message message)
@@ -19,5 +21,6 @@ namespace tel_bot_net.Models.Commands
 
             return message.Text.Contains(this.Name); //&& message.Text.Contains(AppSettings.Name);
         }
+
     }
 }
