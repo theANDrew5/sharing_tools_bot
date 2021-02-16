@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
+using Telegram.Bot.Types.ReplyMarkups;
 
 namespace tel_bot_net.Models.Commands
 {
@@ -15,16 +16,27 @@ namespace tel_bot_net.Models.Commands
         {
             var chatId = message.Chat.Id;
 
-            if (message.Text.Contains("?id="))
-            {
-                var point = message.Text.LastIndexOf("=");
-                string Id = message.Text.Substring(point+1);
+            KeyboardButton one = new KeyboardButton("1");
 
-                await client.SendTextMessageAsync(chatId, $"Succes! Your id = {Id}.");
-            }
-            else
+            KeyboardButton two = new KeyboardButton("2");
+
+            KeyboardButton[] keyboard =
             {
-                await client.SendTextMessageAsync(chatId, "Don't have id.");
+                one,
+                two
+            };
+
+            ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup(keyboard, oneTimeKeyboard: true);
+
+            await client.SendTextMessageAsync(chatId, "Тест", replyMarkup: keyboardMarkup);
+
+            if (message.Text.Contains("1"))
+            {
+                await client.SendTextMessageAsync(chatId, "Ты ввёл 1");
+            }
+            else if (message.Text.Contains("2"))
+            {
+                await client.SendTextMessageAsync(chatId, "Ты ввёл два");
             }
         }
     }

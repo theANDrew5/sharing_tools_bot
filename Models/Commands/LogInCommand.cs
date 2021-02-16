@@ -17,16 +17,25 @@ namespace tel_bot_net.Models.Commands
         {
             var chatId = message.Chat.Id;
 
-            KeyboardButton[] keyboard = new KeyboardButton[]
+            KeyboardButton permiss = new KeyboardButton("ОК");
+            permiss.RequestContact = true;
+
+            KeyboardButton cancel = new KeyboardButton("Отмена");
+
+            KeyboardButton[] keyboard =  
             {
-                ("Ввести данные"),
-                ("Отмена")
+                permiss,
+                cancel
             };
 
             ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup(keyboard, oneTimeKeyboard:true);
 
-            await client.SendTextMessageAsync(chatId, "Введите имя и фамилию", replyMarkup:keyboardMarkup);
-            
+            if (message.Contact == null)
+            {
+                await client.SendTextMessageAsync(chatId, "Для регистрации необходимо получить ваш номер телефона.\n" +
+                    "Для подтвеждения регистраци нажмите: ОК. \n" +
+                    "Если вы отказываетесь предоставить номер нажмите: Отмена ", replyMarkup: keyboardMarkup);
+            }
 
         }
     }
