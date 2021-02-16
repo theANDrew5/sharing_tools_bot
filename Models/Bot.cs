@@ -1,18 +1,17 @@
 ﻿//описание бота
-using System;
+
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using tel_bot_net.Models.Commands;
 
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace tel_bot_net.Models
 {
     public static class Bot
     {
+
         private static TelegramBotClient botClient;
         private static List<Commands.Command> commandList = new List<Commands.Command>();
         public static IReadOnlyList<Commands.Command> Commands => commandList.AsReadOnly();//список команд

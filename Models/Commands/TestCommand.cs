@@ -1,8 +1,12 @@
-﻿
+﻿//команда для тестов
+
 using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
+using System;
+using System.Threading;
+using System.Collections.Generic;
 
 namespace tel_bot_net.Models.Commands
 {
@@ -29,15 +33,42 @@ namespace tel_bot_net.Models.Commands
             ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup(keyboard, oneTimeKeyboard: true);
 
             await client.SendTextMessageAsync(chatId, "Тест", replyMarkup: keyboardMarkup);
+            Program.ReplyChatIds.Add(chatId);//вносим чат id в лист ожидания
 
-            if (message.Text.Contains("1"))
+            Message replyMessage = null;
+
+            while (true)
             {
-                await client.SendTextMessageAsync(chatId, "Ты ввёл 1");
+                if (!Program.ReplyMessages.TryPeek(out replyMessage))
+                    Thread.Sleep(100);
+                else if (replyMessage.Chat.Id != chatId)
+                    Thread.Sleep(100);
+                else
+                    break;
             }
-            else if (message.Text.Contains("2"))
+
+            replyMessage = Program.ReplyMessages.Dequeue();//забираем сообщение из очереди
+            Program.ReplyChatIds.Remove(chatId);// удаляем чат id из списка ожидания
+
+#if DEBUG
+            Thread T = Thread.CurrentThread;
+
+            Console.WriteLine($"Имя потока: {T.Name}");
+            Console.WriteLine($"Ссылка на поток: {T}");
+#endif
+
+            ReplyKeyboardRemove removeKeyboard = new ReplyKeyboardRemove();
+
+            if (replyMessage.Text.Contains("1"))
+            {
+                await client.SendTextMessageAsync(chatId, "Ты ввёл 1",replyMarkup : removeKeyboard);
+            }
+            else if (replyMessage.Text.Contains("2"))
             {
                 await client.SendTextMessageAsync(chatId, "Ты ввёл два");
             }
+
+
         }
     }
 }

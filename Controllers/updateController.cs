@@ -3,6 +3,8 @@
 using Microsoft.AspNetCore.Mvc;
 using tel_bot_net.Models;
 using Telegram.Bot.Types;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 
@@ -12,6 +14,7 @@ namespace tel_bot_net.Controllers
     [ApiController]
     public class updateController : Controller
     {
+
         [HttpGet]
         public IActionResult OnGet(string type, int id)
         {
@@ -28,16 +31,30 @@ namespace tel_bot_net.Controllers
             var message = update.Message;
             var botClient = await Bot.GetBotClientAsync();
 
+            if (Program.ReplyChatIds.Contains(message.Chat.Id))
+            {
+                Program.ReplyMessages.Enqueue(message);
+                return Ok();
+            }
+
             foreach (var command in commands)
             {
                 if (command.Contains(message))
                 {
+#if DEBUG
+                    Console.WriteLine($"Start execute commant: {command.Name}");
+#endif
+
                     await command.Execute(message, botClient);
+#if DEBUG
+                    Console.WriteLine($"Stop execute commant: {command.Name}");
+#endif
                     break;
                 }
             }
 
             return Ok();
         }
+
     }
 }

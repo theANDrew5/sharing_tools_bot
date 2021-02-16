@@ -2,13 +2,9 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
-    "iis": {
-      "applicationUrl": "http://localhost/tel_bot_net",
-      "sslPort": 0
-    },
     "iisExpress": {
-      "applicationUrl": "http://localhost:443",
-      "sslPort": 0
+      "applicationUrl": "http://localhost:61677/",
+      "sslPort": 44352
     }
   },
   "profiles": {
