@@ -20,35 +20,28 @@ namespace tel_bot_net.Models.Commands
         {
             var chatId = message.Chat.Id;
 
-            KeyboardButton one = new KeyboardButton("1");
+            InlineKeyboardButton one = new InlineKeyboardButton();
+            one.Text = "1";
+            one.CallbackData = "/test 1";
 
-            KeyboardButton two = new KeyboardButton("2");
+            InlineKeyboardButton two = new InlineKeyboardButton();
+            two.Text = "2";
+            one.CallbackData = "/test 2";
 
-            KeyboardButton[] keyboard =
+            InlineKeyboardButton[] keyboard =
             {
                 one,
                 two
             };
 
-            ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup(keyboard, oneTimeKeyboard: true);
-
-            await client.SendTextMessageAsync(chatId, "Тест", replyMarkup: keyboardMarkup);
-            Program.ReplyChatIds.Add(chatId);//вносим чат id в лист ожидания
-
-            Message replyMessage = null;
-
-            while (true)
-            {
-                if (!Program.ReplyMessages.TryPeek(out replyMessage))
-                    Thread.Sleep(100);
-                else if (replyMessage.Chat.Id != chatId)
-                    Thread.Sleep(100);
-                else
-                    break;
-            }
-
-            replyMessage = Program.ReplyMessages.Dequeue();//забираем сообщение из очереди
-            Program.ReplyChatIds.Remove(chatId);// удаляем чат id из списка ожидания
+            await client.SendTextMessageAsync(
+                chatId: chatId,
+                text: "Тест",
+                replyMarkup: new InlineKeyboardMarkup(
+                 new[] { InlineKeyboardButton.WithCallbackData("1", "/test 1"),
+                        InlineKeyboardButton.WithCallbackData("2", "/test 2") })
+                );
+            
 
 #if DEBUG
             Thread T = Thread.CurrentThread;
@@ -58,7 +51,7 @@ namespace tel_bot_net.Models.Commands
 #endif
 
             ReplyKeyboardRemove removeKeyboard = new ReplyKeyboardRemove();
-
+/*
             if (replyMessage.Text.Contains("1"))
             {
                 await client.SendTextMessageAsync(chatId, "Ты ввёл 1",replyMarkup : removeKeyboard);
@@ -67,7 +60,7 @@ namespace tel_bot_net.Models.Commands
             {
                 await client.SendTextMessageAsync(chatId, "Ты ввёл два");
             }
-
+*/
 
         }
     }

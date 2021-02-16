@@ -31,12 +31,6 @@ namespace tel_bot_net.Controllers
             var message = update.Message;
             var botClient = await Bot.GetBotClientAsync();
 
-            if (Program.ReplyChatIds.Contains(message.Chat.Id))
-            {
-                Program.ReplyMessages.Enqueue(message);
-                return Ok();
-            }
-
             foreach (var command in commands)
             {
                 if (command.Contains(message))
