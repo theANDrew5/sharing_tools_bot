@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
+using Telegram.Bot.Types.Enums;
 using tel_bot_net.Models.Commands;
 
 
@@ -43,8 +44,9 @@ namespace tel_bot_net.Models
 
             //настройка хука
             string hook = string.Format(AppSettings.Url, "/api/update");//ссылка на тунель Ngrock + ссылка на путь контроллера
-            //string hook2 = string.Format(AppSettings.Url,)
-            await botClient.SetWebhookAsync(hook);
+
+            await botClient.SetWebhookAsync(hook,
+                allowedUpdates: new[] { UpdateType.Message,UpdateType.CallbackQuery});
 
             //Настройка команд для API
             await botClient.SetMyCommandsAsync(BotCommandList); 
@@ -55,4 +57,4 @@ namespace tel_bot_net.Models
 
 
     }
-}
+} 

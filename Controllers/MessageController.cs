@@ -10,20 +10,19 @@ using System.Threading.Tasks;
 
 namespace tel_bot_net.Controllers
 {
-    [Route("api/update")]
-    [ApiController]
-    public class updateController : Controller
+    public class MessageController : Controller
     {
 
-        [HttpGet]
-        public IActionResult OnGet(string type, int id)
+        //public IActionResult OnGet(string type, int id)
+        //{
+        //    return Redirect("https://t.me/ToShar_bot");
+        //}
+        public async Task<OkResult> MessageHandling(Update update)
         {
-            return Redirect("https://t.me/ToShar_bot");
-        }
 
-        [HttpPost]
-        public async Task<OkResult> update([FromBody] Update update)
-        {
+#if DEBUG
+            Console.WriteLine("Message Query handled");
+#endif
 
             if (update.Message == null) return Ok();
 

@@ -20,26 +20,15 @@ namespace tel_bot_net.Models.Commands
         {
             var chatId = message.Chat.Id;
 
-            InlineKeyboardButton one = new InlineKeyboardButton();
-            one.Text = "1";
-            one.CallbackData = "/test 1";
+            List<InlineKeyboardButton[]> keyboard = new List<InlineKeyboardButton[]>();
 
-            InlineKeyboardButton two = new InlineKeyboardButton();
-            two.Text = "2";
-            one.CallbackData = "/test 2";
-
-            InlineKeyboardButton[] keyboard =
-            {
-                one,
-                two
-            };
+            keyboard.Add(new[] { InlineKeyboardButton.WithCallbackData("1", "/test 1") });
+            keyboard.Add(new[] { InlineKeyboardButton.WithCallbackData("2", "/test 2") });
 
             await client.SendTextMessageAsync(
                 chatId: chatId,
                 text: "Тест",
-                replyMarkup: new InlineKeyboardMarkup(
-                 new[] { InlineKeyboardButton.WithCallbackData("1", "/test 1"),
-                        InlineKeyboardButton.WithCallbackData("2", "/test 2") })
+                replyMarkup: new InlineKeyboardMarkup(keyboard)
                 );
             
 
