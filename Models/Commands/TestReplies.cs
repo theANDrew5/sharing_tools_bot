@@ -26,7 +26,7 @@ namespace tel_bot_net.Models.Commands
 
         private async Task WaitReply(long chatId, TelegramBotClient client)
         {
-            _updateHolder.VaitReply(chatId);
+            _updateHolder.WaitReply(chatId);
 
             Task<Update> replyUpdate = Task.Run(() => _updateHolder.DeHold(chatId));
             replyUpdate.Wait();

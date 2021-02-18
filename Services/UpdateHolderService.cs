@@ -13,7 +13,7 @@ namespace tel_bot_net.Services
         private static Dictionary<long,Update> Replies = new Dictionary<long, Update>();
 
         //помещаем id диалога и ссылку на поток в ожидание
-        public void VaitReply (long id)
+        public void WaitReply (long id)
         {
             IdsReplies.Add(id);
         }
@@ -37,11 +37,10 @@ namespace tel_bot_net.Services
         //выдаём update
         public Update DeHold (long id)
         {
-            while (true)
+            while (!Replies.ContainsKey(id))
             {
-                if (!Replies.ContainsKey(id))
-                    Task.Delay(500);
-                else break;
+                    Task.Delay(500).Wait();
+ 
             }
             Update update = Replies[id];
             Replies.Remove(id);
