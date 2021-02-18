@@ -7,6 +7,8 @@ namespace tel_bot_net.Services
 {
     public class MessageHandlerService
     {
+        private UpdateHolderService _updateHolder = Program.UpdateHolder;
+
         public async Task<bool> Handle(Update update)
         {
 
@@ -20,6 +22,9 @@ namespace tel_bot_net.Services
             var message = update.Message;
             var botClient = await Bot.GetBotClientAsync();
 
+            if (_updateHolder.Hold(update))
+                return true;
+
             foreach (var command in commands)
             {
                 if (command.Contains(message))
@@ -27,7 +32,6 @@ namespace tel_bot_net.Services
 #if DEBUG
                     Console.WriteLine($"Start execute commant: {command.Name}");
 #endif
-
                     await command.Execute(message, botClient);
 #if DEBUG
                     Console.WriteLine($"Stop execute commant: {command.Name}");

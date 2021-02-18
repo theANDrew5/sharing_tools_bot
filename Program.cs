@@ -1,18 +1,16 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using System.Collections.Generic;
+using tel_bot_net.Services;
 using Telegram.Bot.Types;
+
 
 namespace tel_bot_net
 {
 
     public class Program
     {
-        //лист ожидания ответа пользователя
-        public static List<long> ReplyChatIds = new List<long>();
-        //очередь обновлений с ответами
-        public static Queue<Message> ReplyMessages = new Queue<Message>();
-
+        public static UpdateHolderService UpdateHolder = new UpdateHolderService();
+        
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run(); //запуск
