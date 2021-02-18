@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using tel_bot_net.Models;
+using tel_bot_net.Services;
 
 namespace tel_bot_net
 {
@@ -31,6 +32,9 @@ namespace tel_bot_net
                 AddControllers().
                 AddNewtonsoftJson()
                 ; // добавл€ем контроллеры MVC
+
+            services.AddTransient<MessageHandlerService>();//—ервис перехвата сообщений
+            services.AddTransient<CallbackHandlerService>();//—ервис перехвата нажатий кнопок
 
         }
 

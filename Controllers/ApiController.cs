@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
-using tel_bot_net.Controllers;
+using tel_bot_net.Services;
 
 //[ApiController]
 
@@ -15,6 +15,16 @@ namespace tel_bot_net.Controllers
     [ApiController]
     public class ApiController : Controller
     {
+        //внедрение зависимости от сериса
+        private readonly MessageHandlerService _messageHandler;
+        private readonly CallbackHandlerService _callbackHandler;
+
+        public ApiController(MessageHandlerService messageHandler, CallbackHandlerService callbackHandler)
+        {
+            _messageHandler = messageHandler;
+            _callbackHandler = callbackHandler;
+        }
+        //
 
         [HttpGet]
         public IActionResult OnGet(string type, int id)
@@ -28,16 +38,14 @@ namespace tel_bot_net.Controllers
         {
             if(update.Type == UpdateType.Message)
             {
-                //return Ok();
-                MessageController controller = new MessageController();
-                return await controller.MessageHandling(update);
+                if (await _messageHandler.Handle(update))
+                    return Ok();
             }
 
             if (update.Type == UpdateType.CallbackQuery)
             {
-                //return Ok();
-                CallbackController controller = new CallbackController();
-                return await controller.CalbackHandling(update);
+                if (await _callbackHandler.Handle(update))
+                    return Ok();
             }
             return Ok();
         }

@@ -28,7 +28,7 @@ namespace tel_bot_net.Models
             //комманды добавлять сдесь
             commandList.Add(new StartCommand());
             commandList.Add(new LogInCommand());
-            commandList.Add(new TestCommand());
+            commandList.Add(new TestInlineButtonsCommand());
 
             //заполняем список команд для API
             foreach (var command in Commands)

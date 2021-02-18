@@ -1,30 +1,20 @@
-﻿//контроллер сообщений
-
-using Microsoft.AspNetCore.Mvc;
-using tel_bot_net.Models;
-using Telegram.Bot.Types;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Threading.Tasks;
+using Telegram.Bot.Types;
+using tel_bot_net.Models;
 
-
-namespace tel_bot_net.Controllers
+namespace tel_bot_net.Services
 {
-    public class MessageController : Controller
+    public class MessageHandlerService
     {
-
-        //public IActionResult OnGet(string type, int id)
-        //{
-        //    return Redirect("https://t.me/ToShar_bot");
-        //}
-        public async Task<OkResult> MessageHandling(Update update)
+        public async Task<bool> Handle(Update update)
         {
 
 #if DEBUG
-            Console.WriteLine("Message Query handled");
+            Console.WriteLine("Message Query handled by service");
 #endif
 
-            if (update.Message == null) return Ok();
+            if (update.Message == null) return true;
 
             var commands = Bot.Commands;
             var message = update.Message;
@@ -46,8 +36,7 @@ namespace tel_bot_net.Controllers
                 }
             }
 
-            return Ok();
+            return true;
         }
-
     }
 }
