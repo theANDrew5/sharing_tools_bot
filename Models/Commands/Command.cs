@@ -3,6 +3,7 @@
 using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
+using tel_bot_net.Services;
 
 namespace tel_bot_net.Models.Commands
 {
@@ -12,7 +13,7 @@ namespace tel_bot_net.Models.Commands
 
         public abstract string Description { get; }
 
-        public abstract Task Execute(Message message, TelegramBotClient client);
+        public abstract Task Execute(Message message, TelegramBotClient client, ReplyHandlerService replyHandler);
 
         public bool Contains(Message message)
         {

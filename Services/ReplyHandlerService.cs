@@ -1,13 +1,11 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Telegram.Bot.Types;
 
 namespace tel_bot_net.Services
 {
-    public class UpdateHolderService
+    public class ReplyHandlerService
     {
         private static List<long> IdsReplies = new List<long>();
         private static Dictionary<long,Update> Replies = new Dictionary<long, Update>();

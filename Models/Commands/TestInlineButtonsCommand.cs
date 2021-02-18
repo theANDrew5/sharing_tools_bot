@@ -8,6 +8,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using tel_bot_net.Services;
 
 namespace tel_bot_net.Models.Commands
 {
@@ -17,7 +18,7 @@ namespace tel_bot_net.Models.Commands
 
         public override string Description => "Test command";
 
-        public override async Task Execute(Message message, TelegramBotClient client)
+        public override async Task Execute(Message message, TelegramBotClient client, ReplyHandlerService replyHandler)
         {
             var chatId = message.Chat.Id;
 
@@ -31,16 +32,6 @@ namespace tel_bot_net.Models.Commands
                 text: "Тест",
                 replyMarkup: new InlineKeyboardMarkup(keyboard)
                 );
-            
-
-#if DEBUG
-            Thread T = Thread.CurrentThread;
-
-            Console.WriteLine($"Имя потока: {T.Name}");
-            Console.WriteLine($"Ссылка на поток: {T}");
-#endif
-
-
         }
     }
 }

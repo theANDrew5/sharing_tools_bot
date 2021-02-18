@@ -7,7 +7,13 @@ namespace tel_bot_net.Services
 {
     public class MessageHandlerService
     {
-        private UpdateHolderService _updateHolder = Program.UpdateHolder;
+        //private ReplyHandlerService replyHandler = Program.UpdateHolder;
+        private static ReplyHandlerService replyHandler;
+
+        public MessageHandlerService(ReplyHandlerService _replyHandler)
+        {
+            replyHandler = _replyHandler;
+        }
 
         public async Task<bool> Handle(Update update)
         {
@@ -22,7 +28,7 @@ namespace tel_bot_net.Services
             var message = update.Message;
             var botClient = await Bot.GetBotClientAsync();
 
-            if (_updateHolder.Hold(update))
+            if (replyHandler.Hold(update))
                 return true;
 
             foreach (var command in commands)
@@ -32,7 +38,7 @@ namespace tel_bot_net.Services
 #if DEBUG
                     Console.WriteLine($"Start execute commant: {command.Name}");
 #endif
-                    await command.Execute(message, botClient);
+                    await command.Execute(message, botClient, replyHandler);
 #if DEBUG
                     Console.WriteLine($"Stop execute commant: {command.Name}");
 #endif
