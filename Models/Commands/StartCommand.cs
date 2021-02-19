@@ -49,7 +49,7 @@ namespace tel_bot_net.Models.Commands
                     );
             else if (message.Contact != null)
             {
-                MyUser newUser = new MyUser { Id = message.Chat.Id, PhoneNumber = message.Contact.PhoneNumber};
+                MyUser newUser = new MyUser { ChatId = message.Chat.Id, PhoneNumber = message.Contact.PhoneNumber};
                 await client.SendTextMessageAsync(chatId, "Отлично! Теперь отправь мне свои фамилию и имя.",
                     replyMarkup: new ReplyKeyboardRemove()
                     );

@@ -13,7 +13,7 @@ namespace tel_bot_net.Services
         {
             using (var db = new BotDbContext())
             {
-                await db.Users.AddAsync(user);
+                db.Users.Add(user);
                 if (db.SaveChanges() > 0)
                     return true;
                 else
