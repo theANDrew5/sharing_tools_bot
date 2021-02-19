@@ -14,7 +14,7 @@ namespace tel_bot_net.Controllers
             db = context;
         }
 
-        public async Task<OkResult> Create(User user)
+        public async Task<OkResult> Create(MyUser user)
         {
             db.Users.Add(user);
             await db.SaveChangesAsync();

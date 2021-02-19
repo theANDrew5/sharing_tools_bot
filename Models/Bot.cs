@@ -27,7 +27,6 @@ namespace tel_bot_net.Models
 
             //комманды добавлять сдесь
             commandList.Add(new StartCommand());
-            commandList.Add(new LogInCommand());
             commandList.Add(new TestInlineButtonsCommand());
             commandList.Add(new TestReplies());
             commandList.Add(new CleanKeyboardCommand());

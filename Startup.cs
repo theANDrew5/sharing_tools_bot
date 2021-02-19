@@ -23,10 +23,10 @@ namespace tel_bot_net
 
         public void ConfigureServices(IServiceCollection services)// подключение веб сервисов
         {
-            string connection = Configuration.GetConnectionString("DefaultConnection");
-            
-            services.AddDbContext<BotDbContext>(options =>
-            options.UseSqlServer(connection));
+            //string connection = Configuration.GetConnectionString("DefaultConnection");
+
+            //services.AddDbContext<BotDbContext>(options =>
+            //options.UseSqlServer(connection));
 
             services.
                 AddControllers().
@@ -35,7 +35,8 @@ namespace tel_bot_net
 
             services.AddTransient<MessageHandlerService>();//Сервис перехвата сообщений
             services.AddTransient<CallbackHandlerService>();//Сервис перехвата нажатий кнопок
-            services.AddSingleton<ReplyHandlerService>();
+            services.AddTransient<DataBaseService>();//Сервис базы данных
+            services.AddSingleton<ReplyHandlerService>();//Сервис перехвата и хранения сообщений
 
         }
 

@@ -9,7 +9,6 @@ using tel_bot_net.Services;
 using tel_bot_net.Models;
 using tel_bot_net.Models.Commands;
 
-//[ApiController]
 
 namespace tel_bot_net.Controllers
 {

@@ -18,7 +18,7 @@ namespace tel_bot_net.Models.Commands
 
         public override string Description => "Test command";
 
-        public override async Task Execute(Message message, TelegramBotClient client, ReplyHandlerService replyHandler)
+        public override async Task Execute(Message message, TelegramBotClient client, ReplyHandlerService replyHandler, DataBaseService dbService)
         {
             var chatId = message.Chat.Id;
 
@@ -32,6 +32,11 @@ namespace tel_bot_net.Models.Commands
                 text: "Тест",
                 replyMarkup: new InlineKeyboardMarkup(keyboard)
                 );
+        }
+
+        protected override Task RepliesHandling(long chatId, TelegramBotClient client, ReplyHandlerService replyHandler, DataBaseService dbService)
+        {
+            throw new NotImplementedException();
         }
     }
 }

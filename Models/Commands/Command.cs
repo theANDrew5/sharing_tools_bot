@@ -13,7 +13,20 @@ namespace tel_bot_net.Models.Commands
 
         public abstract string Description { get; }
 
-        public abstract Task Execute(Message message, TelegramBotClient client, ReplyHandlerService replyHandler);
+        public abstract Task Execute(Message message, TelegramBotClient client, ReplyHandlerService replyHandler, DataBaseService dbService);
+
+        protected abstract Task RepliesHandling(long chatId, TelegramBotClient client, ReplyHandlerService replyHandler, DataBaseService dbService);
+
+        protected async Task<Message> WaitReply(long chatId, ReplyHandlerService replyHandler)
+        {
+            replyHandler.WaitReply(chatId);
+
+            Task<Update> replyUpdate = Task.Run(() => replyHandler.DeHold(chatId));
+            replyUpdate.Wait();
+
+            return replyUpdate.Result.Message;
+        }
+
 
         public bool Contains(Message message)
         {
