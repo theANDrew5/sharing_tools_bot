@@ -14,12 +14,41 @@ namespace tel_bot_net.Services
             using (var db = new BotDbContext())
             {
                 db.Users.Add(user);
-                if (db.SaveChanges() > 0)
+                if (await db.SaveChangesAsync() > 0)
                     return true;
                 else
                     return false;
             }
 
+        }
+
+        //public async  Task<List<long>> getUsersList()
+        //{
+        //    using (var db = new BotDbContext())
+        //    {
+        //        db.Users.
+        //    }
+        //}
+
+        public bool UserCheck (long chatID)
+        {
+            using (var db = new BotDbContext())
+            {
+                //var userId = from user in db.Users.
+                try
+                {
+                    //int userId = db.Users.Where(u => u.ChatId == chatID).Select(u => u.Id).Single();
+                    if (db.Users
+                        .Where(u => u.ChatId == chatID)
+                        .Select(u => u.Id).Single() > 0)
+                        return true;
+                    return false;
+                }
+                catch (InvalidOperationException)
+                {
+                    return false;
+                }
+            }
         }
 
     }

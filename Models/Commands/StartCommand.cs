@@ -22,18 +22,31 @@ namespace tel_bot_net.Models.Commands
         {
             var chatId = message.Chat.Id;
 
-            await client.SendTextMessageAsync(chatId,
-                "Привет! Для начала работы тебе необходимо зарегистрироваться.\n" +
-                "Мне нужны твои имя, фамилия, и согласие на предоставление твоего телефонного номера.\n" +
-                "Если ты согласен нажми ОК, если не согласен нажми Отмена.\n",
-                replyMarkup: new ReplyKeyboardMarkup(new KeyboardButton[]
-                {
+            if (!dbSevice.UserCheck(chatId))
+            {
+                await client.SendTextMessageAsync(chatId,
+                    "Привет! Для начала работы тебе необходимо зарегистрироваться.\n" +
+                    "Мне нужны твои имя, фамилия, и согласие на предоставление твоего телефонного номера.\n" +
+                    "Если ты согласен нажми ОК, если не согласен нажми Отмена.\n",
+                    replyMarkup: new ReplyKeyboardMarkup(new KeyboardButton[]
+                    {
                 new KeyboardButton{ Text = "Ok", RequestContact = true},
                 new KeyboardButton{ Text = "Отмена"}
-                }, oneTimeKeyboard: true)
-                );
+                    }, oneTimeKeyboard: true)
+                    );
+                Task.Run(() => RepliesHandling(chatId, client, replyHandler, dbSevice));
+            }
+            else
+            {
+                await client.SendTextMessageAsync(chatId,
+                    $"Привет! {message.Chat.FirstName}\n" +
+                    "Вот функции, которыми ты можешь воспользоваться:\n"
+                    );
+                await client.SendTextMessageAsync(chatId,
+                    "Если ты не знаешь как пользоваться функцией введи команду: /aboutfunctions\n"
+                    );
 
-            Task.Run(() => RepliesHandling(chatId, client, replyHandler, dbSevice));
+            }
         }
 
 

@@ -32,7 +32,7 @@ namespace tel_bot_net.Services
             }
             
 
-            var commands = Bot.Commands;
+            var commands = Bot.commands;
             var message = update.Message;
             var botClient = await Bot.GetBotClientAsync();
 

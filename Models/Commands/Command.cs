@@ -20,11 +20,8 @@ namespace tel_bot_net.Models.Commands
         protected async Task<Message> WaitReply(long chatId, ReplyHandlerService replyHandler)
         {
             replyHandler.WaitReply(chatId);
-
-            Task<Update> replyUpdate = Task.Run(() => replyHandler.DeHold(chatId));
-            replyUpdate.Wait();
-
-            return replyUpdate.Result.Message;
+            Update replyUpdate = await replyHandler.DeHoldAsync(chatId);
+            return replyUpdate.Message;
         }
 
 
@@ -33,7 +30,7 @@ namespace tel_bot_net.Models.Commands
             if (message.Type != Telegram.Bot.Types.Enums.MessageType.Text)
                 return false;
 
-            return message.Text.Contains(this.Name); //&& message.Text.Contains(AppSettings.Name);
+            return message.Text.Contains(this.Name);
         }
 
     }

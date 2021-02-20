@@ -7,7 +7,7 @@ using tel_bot_net.Services;
 
 namespace tel_bot_net.Models.Commands
 {
-    public class TestReplies : Command
+    public class TestRepliesCommand : Command
     {
         public override string Name => "/testreplies";
 

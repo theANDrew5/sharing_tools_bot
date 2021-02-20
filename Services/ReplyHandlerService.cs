@@ -38,14 +38,13 @@ namespace tel_bot_net.Services
             while (!Replies.ContainsKey(id))
             {
                     Task.Delay(500).Wait();
- 
             }
             Update update = Replies[id];
             Replies.Remove(id);
             return update;
         }
 
-        public async Task<Update> DeHoldAsynk(long id)
+        public async Task<Update> DeHoldAsync(long id)
         {
             return await Task.Run(() => DeHold(id));
         }

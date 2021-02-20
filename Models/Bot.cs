@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
+using Telegram.Bot.Types.ReplyMarkups;
 using tel_bot_net.Models.Commands;
+using tel_bot_net.Models.Callbacks;
 
 
 namespace tel_bot_net.Models
@@ -14,9 +16,23 @@ namespace tel_bot_net.Models
     {
 
         private static TelegramBotClient botClient;
-        private static List<Commands.Command> commandList = new List<Commands.Command>();
-        public static IReadOnlyList<Commands.Command> Commands => commandList.AsReadOnly();//список команд
-        private static List<BotCommand> BotCommandList = new List<BotCommand>();
+        private static List<Commands.Command> commandList = new List<Commands.Command>()
+        {
+            //комманды добавлять сдесь
+            new StartCommand(),
+            new TestInlineButtonsCommand(),
+            new TestRepliesCommand(),
+            new CleanKeyboardCommand()
+        };
+        public static IReadOnlyList<Commands.Command> commands => commandList.AsReadOnly();//список команд
+        private static List<BotCommand> botCommandList = new List<BotCommand>();
+
+        private static List<Callback> callbackList = new List<Callback>() 
+        {
+            new ToolShareCallback()
+        };
+        public static IReadOnlyList<Callback> callbacks => callbackList.AsReadOnly();//список колбеков
+
 
         public static async Task<TelegramBotClient> GetBotClientAsync()
         {
@@ -25,19 +41,19 @@ namespace tel_bot_net.Models
                 return botClient;
             }
 
-            //комманды добавлять сдесь
-            commandList.Add(new StartCommand());
-            commandList.Add(new TestInlineButtonsCommand());
-            commandList.Add(new TestReplies());
-            commandList.Add(new CleanKeyboardCommand());
+            ////комманды добавлять сдесь
+            //commandList.Add(new StartCommand());
+            //commandList.Add(new TestInlineButtonsCommand());
+            //commandList.Add(new TestRepliesCommand());
+            //commandList.Add(new CleanKeyboardCommand());
 
             //заполняем список команд для API
-            foreach (var command in Commands)
+            foreach (var command in commands)
             {
                 var temp = new BotCommand();
                 temp.Command = command.Name.Substring(1);
                 temp.Description = command.Description;
-                BotCommandList.Add(temp);
+                botCommandList.Add(temp);
             }
 
             //создание бота
@@ -50,10 +66,15 @@ namespace tel_bot_net.Models
                 allowedUpdates: new[] { UpdateType.Message,UpdateType.CallbackQuery});
 
             //Настройка команд для API
-            await botClient.SetMyCommandsAsync(BotCommandList); 
+            await botClient.SetMyCommandsAsync(botCommandList); 
 
             return botClient;
 
+        }
+
+        public InlineKeyboardMarkup GetFuncKeyboard()
+        {
+            for
         }
 
 
