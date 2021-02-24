@@ -8,12 +8,10 @@ namespace tel_bot_net.Models
     public class BotDbContext: DbContext
     {
         public DbSet<MyUser> Users { get; set; }// Таблица пользователей
+        public DbSet<Tool> Tools { get; set; }//таблица инструментов
+        public DbSet<OpenTransaction> OpenTransactions { get; set; }//таблица взятий инструментов
+        public DbSet<CloseTransaction> CloseTransactions { get; set; }//таблица возвращений инструментов
 
-        //public BotDbContext(DbContextOptions<BotDbContext> options)
-        //    : base(options)
-        //{
-        //    Database.EnsureCreated();// создаем базу данных при первом обращении
-        //}
 
         public BotDbContext()
         {
