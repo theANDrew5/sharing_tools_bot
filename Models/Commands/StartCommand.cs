@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
+using tel_bot_net.Models;
 using tel_bot_net.Services;
 using tel_bot_net.Models.DbModels;
 
@@ -40,8 +41,8 @@ namespace tel_bot_net.Models.Commands
             {
                 await client.SendTextMessageAsync(chatId,
                     $"Привет! {message.Chat.FirstName}\n" +
-                    "Вот функции, которыми ты можешь воспользоваться:\n"
-                    );
+                    "Вот функции, которыми ты можешь воспользоваться:\n",
+                    replyMarkup: Bot.GetFuncKeyboard());
                 await client.SendTextMessageAsync(chatId,
                     "Если ты не знаешь как пользоваться функцией введи команду: /aboutfunctions\n"
                     );

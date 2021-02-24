@@ -10,6 +10,10 @@ namespace tel_bot_net.Models.Callbacks
 {
     public class ToolShareCallback : Callback
     {
+        public override string Name => "toolshare";
+
+        public override string ButtonName => "Взять инструмент";
+
         public override async Task Execute(CallbackQuery callback, TelegramBotClient client, ReplyHandlerService replyHandler, DataBaseService dbService)
         {
             var chatId = callback.From.Id;
@@ -46,7 +50,7 @@ namespace tel_bot_net.Models.Callbacks
                 case "Я согласен с правилами, продолжить":
                     await client.SendTextMessageAsync(chatId,
                         "OK, не говори потом, что не предупреждали.\n" +
-                        "Введи ID оборудования",
+                        "Введи ID оборудования.",
                         replyMarkup: new ReplyKeyboardRemove());
 
                     message = await WaitReply(chatId, replyHandler);

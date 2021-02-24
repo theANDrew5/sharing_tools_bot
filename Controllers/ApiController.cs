@@ -1,13 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using tel_bot_net.Services;
-using tel_bot_net.Models;
-using tel_bot_net.Models.Commands;
+
 
 
 namespace tel_bot_net.Controllers

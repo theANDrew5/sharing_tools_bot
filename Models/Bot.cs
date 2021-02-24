@@ -29,6 +29,7 @@ namespace tel_bot_net.Models
 
         private static List<Callback> callbackList = new List<Callback>() 
         {
+            //функуии добавлять сдесь
             new ToolShareCallback()
         };
         public static IReadOnlyList<Callback> callbacks => callbackList.AsReadOnly();//список колбеков
@@ -40,12 +41,6 @@ namespace tel_bot_net.Models
             {
                 return botClient;
             }
-
-            ////комманды добавлять сдесь
-            //commandList.Add(new StartCommand());
-            //commandList.Add(new TestInlineButtonsCommand());
-            //commandList.Add(new TestRepliesCommand());
-            //commandList.Add(new CleanKeyboardCommand());
 
             //заполняем список команд для API
             foreach (var command in commands)
@@ -72,9 +67,15 @@ namespace tel_bot_net.Models
 
         }
 
-        public InlineKeyboardMarkup GetFuncKeyboard()
+        public static InlineKeyboardMarkup GetFuncKeyboard()
         {
-            for
+            List<InlineKeyboardButton[]> keyboard = new List<InlineKeyboardButton[]>();
+            
+            foreach (var callback in callbackList)
+            {
+                keyboard.Add(new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(callback.ButtonName, callback.Name)});
+            }
+            return new InlineKeyboardMarkup(keyboard);
         }
 
 

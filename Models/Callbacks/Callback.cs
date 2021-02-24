@@ -10,9 +10,9 @@ namespace tel_bot_net.Models.Callbacks
 {
     public abstract class Callback
     {
-        public virtual string Name { get; }// имя колбека и иего дата
+        public abstract string Name { get; }// имя колбека и иего дата
 
-        public virtual string ButtonName { get; } // текст на кнопке
+        public abstract string ButtonName { get; } // текст на кнопке
 
         public abstract Task Execute(CallbackQuery callback, TelegramBotClient client, ReplyHandlerService replyHandler, DataBaseService dbService);
 
@@ -25,10 +25,10 @@ namespace tel_bot_net.Models.Callbacks
             return replyUpdate.Message;
         }
 
-        public bool Contains(CallbackQuery callback)
+        public bool Contains(string data)
         {
 
-            return callback.Data.Contains(this.Name);
+            return data.Contains(this.Name);
         }
 
         public InlineKeyboardButton GetKey()

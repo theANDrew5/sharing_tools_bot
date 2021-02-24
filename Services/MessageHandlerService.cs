@@ -30,14 +30,14 @@ namespace tel_bot_net.Services
 #endif
                 return true;
             }
-            
+
+
+            if (replyHandler.Hold(update))
+                return true;
 
             var commands = Bot.commands;
             var message = update.Message;
             var botClient = await Bot.GetBotClientAsync();
-
-            if (replyHandler.Hold(update))
-                return true;
 
             foreach (var command in commands)
             {
