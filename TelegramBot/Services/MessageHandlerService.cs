@@ -2,19 +2,13 @@
 using System.Threading.Tasks;
 using Telegram.Bot.Types;
 using tel_bot_net.Models;
+using tel_bot_net.Singletones;
 
 namespace tel_bot_net.Services
 {
     public class MessageHandlerService
     {
-        //private static ReplyHandlerService replyHandler;
-        private static DataBaseService dbSevice;
-
-        public MessageHandlerService( DataBaseService _dbSevice)
-        {
-            dbSevice = _dbSevice;
-        }
-
+        private ReplyHandler replyHandler = ReplyHandler.GetInstance();
         public async Task<bool> Handle(Update update)
         {
 
@@ -31,7 +25,7 @@ namespace tel_bot_net.Services
             }
 
 
-            if (ReplyHandler.Hold(update))
+            if (replyHandler.Hold(update))
                 return true;
 
             var commands = Bot.commands;
@@ -45,7 +39,7 @@ namespace tel_bot_net.Services
 #if DEBUG
                     Console.WriteLine($"Start execute commant: {command.Name}");
 #endif
-                    await command.Execute(message, botClient, dbSevice);
+                    await command.Execute(message, botClient);
 #if DEBUG
                     Console.WriteLine($"Stop execute commant: {command.Name}");
 #endif

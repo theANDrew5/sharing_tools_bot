@@ -29,7 +29,7 @@ namespace tel_bot_net
 
             services.AddTransient<MessageHandlerService>();//Сервис перехвата сообщений
             services.AddTransient<CallbackHandlerService>();//Сервис перехвата нажатий кнопок
-            services.AddTransient<DataBaseService>();//Сервис базы данных
+            //services.AddTransient<DBMethods>();//Сервис базы данных
             //services.AddSingleton<ReplyHandlerService>();//Сервис перехвата и хранения сообщений
 
         }

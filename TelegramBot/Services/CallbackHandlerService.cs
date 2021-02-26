@@ -7,15 +7,6 @@ namespace tel_bot_net.Services
 {
     public class CallbackHandlerService
     {
-        //private static ReplyHandler replyHandler;
-        private static DataBaseService dbSevice;
-
-        public CallbackHandlerService(DataBaseService _dbSevice)
-        {
-            //replyHandler = _replyHandler;
-            dbSevice = _dbSevice;
-        }
-
 
         public async Task<bool> Handle(Update update)
         {
@@ -38,7 +29,7 @@ namespace tel_bot_net.Services
 #if DEBUG
                     Console.WriteLine($"Start execute commant: {callback.Name}");
 #endif
-                    await callback.Execute(calbackQuery, botClient, dbSevice);
+                    await callback.Execute(calbackQuery, botClient);
 #if DEBUG
                     Console.WriteLine($"Stop execute commant: {callback.Name}");
 #endif

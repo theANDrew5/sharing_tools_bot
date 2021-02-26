@@ -15,7 +15,7 @@ namespace tel_bot_net.Models.Commands
 
         public override string Description => "Команда для удаления кастомной клавиатуры";
 
-        public override async Task Execute(Message message, TelegramBotClient client, DataBaseService dbService)
+        public override async Task Execute(Message message, TelegramBotClient client)
         {
             var chatId = message.Chat.Id;
 
@@ -28,7 +28,7 @@ namespace tel_bot_net.Models.Commands
                 );
         }
 
-        protected override Task RepliesHandling(long chatId, TelegramBotClient client, DataBaseService dbService)
+        protected override Task RepliesHandling(long chatId, TelegramBotClient client)
         {
             throw new NotImplementedException();
         }

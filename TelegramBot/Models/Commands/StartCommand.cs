@@ -4,8 +4,6 @@ using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
-using tel_bot_net.Models;
-using tel_bot_net.Services;
 using BotDB.DbModels;
 
 
@@ -19,11 +17,11 @@ namespace tel_bot_net.Models.Commands
         public override string Description => "Start command";
 
 
-        public override async Task Execute(Message message, TelegramBotClient client,  DataBaseService dbSevice)
+        public override async Task Execute(Message message, TelegramBotClient client)
         {
             var chatId = message.Chat.Id;
 
-            if (!dbSevice.UserCheck(chatId))
+            if (!dBMethods.UserCheck(chatId))
             {
                 await client.SendTextMessageAsync(chatId,
                     "Привет! Для начала работы тебе необходимо зарегистрироваться.\n" +
@@ -35,7 +33,7 @@ namespace tel_bot_net.Models.Commands
                 new KeyboardButton{ Text = "Отмена"}
                     }, oneTimeKeyboard: true)
                     );
-                Task.Run(() => RepliesHandling(chatId, client, dbSevice));
+                Task.Run(() => RepliesHandling(chatId, client));
             }
             else
             {
@@ -51,7 +49,7 @@ namespace tel_bot_net.Models.Commands
         }
 
 
-        protected override async Task RepliesHandling(long chatId, TelegramBotClient client, DataBaseService dbService)
+        protected override async Task RepliesHandling(long chatId, TelegramBotClient client)
         {
             Message message = await WaitReply(chatId);
 
@@ -73,7 +71,7 @@ namespace tel_bot_net.Models.Commands
                 if (message.Text != null)
                 {
                     newUser.Name = message.Text;
-                    if(await dbService.AddUser(newUser))
+                    if(await dBMethods.AddUser(newUser))
                         await client.SendTextMessageAsync(chatId, "Отлично! Теперь ты зарегистрирован и можешь пользоваться функционалом этого бота.");
                 }
 

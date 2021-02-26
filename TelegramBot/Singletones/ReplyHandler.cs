@@ -3,21 +3,34 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Telegram.Bot.Types;
 
-namespace tel_bot_net.Services
+namespace tel_bot_net.Singletones
 {
-    static class ReplyHandler
+     public class ReplyHandler
     {
-        private static List<long> IdsReplies = new List<long>();
-        private static Dictionary<long,Update> Replies = new Dictionary<long, Update>();
+        private static readonly ReplyHandler instance = new ReplyHandler();
+
+        private static List<long> IdsReplies;
+        private static Dictionary<long, Update> Replies;
+
+        private ReplyHandler()
+        {
+            IdsReplies = new List<long>();
+            Replies = new Dictionary<long, Update>();
+        }
+
+        public static ReplyHandler GetInstance()
+        {
+            return instance;
+        }
 
         //помещаем id диалога и ссылку на поток в ожидание
-        public static void WaitReply (long id)
+        public void WaitReply (long id)
         {
             IdsReplies.Add(id);
         }
 
         //проверяем ожидаем ли мы этот update перехват если да
-        public static bool Hold (Update update)
+        public bool Hold (Update update)
         {
             long id = update.Message.Chat.Id;
 
@@ -33,7 +46,7 @@ namespace tel_bot_net.Services
 
 
         //выдаём update
-        public static Update DeHold (long id)
+        public Update DeHold (long id)
         {
             while (!Replies.ContainsKey(id))
             {
@@ -44,7 +57,7 @@ namespace tel_bot_net.Services
             return update;
         }
 
-        public static async Task<Update> DeHoldAsync(long id)
+        public async Task<Update> DeHoldAsync(long id)
         {
             return await Task.Run(() => DeHold(id));
         }

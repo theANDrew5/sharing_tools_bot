@@ -14,7 +14,7 @@ namespace tel_bot_net.Models.Callbacks
 
         public override string ButtonName => "Взять инструмент";
 
-        public override async Task Execute(CallbackQuery callback, TelegramBotClient client, DataBaseService dbService)
+        public override async Task Execute(CallbackQuery callback, TelegramBotClient client)
         {
             var chatId = callback.From.Id;
 
@@ -27,10 +27,10 @@ namespace tel_bot_net.Models.Callbacks
                     new KeyboardButton [] { new KeyboardButton ("Отмена")}
                 }, oneTimeKeyboard: true)
                 );
-            Task.Run(() => RepliesHandling(chatId, client, dbService));
+            Task.Run(() => RepliesHandling(chatId, client));
         }
 
-        protected override async Task RepliesHandling(long chatId, TelegramBotClient client, DataBaseService dbService)
+        protected override async Task RepliesHandling(long chatId, TelegramBotClient client)
         {
             Message message = await WaitReply(chatId);
 

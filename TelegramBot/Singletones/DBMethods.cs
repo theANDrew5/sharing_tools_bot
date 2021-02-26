@@ -5,10 +5,20 @@ using System.Threading.Tasks;
 using BotDB;
 using BotDB.DbModels;
 
-namespace tel_bot_net.Services
+namespace tel_bot_net.Singletones
 {
-    public class DataBaseService
+    public class DBMethods
     {
+        private static readonly DBMethods instance = new DBMethods();
+
+        private DBMethods()
+        { }
+
+        public static DBMethods GetInstance()
+        {
+            return instance;
+        }
+
         public async Task<bool> AddUser(MyUser user)
         {
             using (var db = new BotDbContext())
