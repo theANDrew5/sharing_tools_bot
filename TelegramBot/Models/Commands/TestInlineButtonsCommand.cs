@@ -5,7 +5,6 @@ using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using tel_bot_net.Services;
@@ -18,7 +17,7 @@ namespace tel_bot_net.Models.Commands
 
         public override string Description => "Test command";
 
-        public override async Task Execute(Message message, TelegramBotClient client, ReplyHandlerService replyHandler, DataBaseService dbService)
+        public override async Task Execute(Message message, TelegramBotClient client, DataBaseService dbService)
         {
             var chatId = message.Chat.Id;
 
@@ -34,7 +33,7 @@ namespace tel_bot_net.Models.Commands
                 );
         }
 
-        protected override Task RepliesHandling(long chatId, TelegramBotClient client, ReplyHandlerService replyHandler, DataBaseService dbService)
+        protected override Task RepliesHandling(long chatId, TelegramBotClient client, DataBaseService dbService)
         {
             throw new NotImplementedException();
         }

@@ -13,14 +13,14 @@ namespace tel_bot_net.Models.Commands
 
         public abstract string Description { get; }
 
-        public abstract Task Execute(Message message, TelegramBotClient client, ReplyHandlerService replyHandler, DataBaseService dbService);
+        public abstract Task Execute(Message message, TelegramBotClient client, DataBaseService dbService);
 
-        protected abstract Task RepliesHandling(long chatId, TelegramBotClient client, ReplyHandlerService replyHandler, DataBaseService dbService);
+        protected abstract Task RepliesHandling(long chatId, TelegramBotClient client, DataBaseService dbService);
 
-        protected async Task<Message> WaitReply(long chatId, ReplyHandlerService replyHandler)
+        protected async Task<Message> WaitReply(long chatId)
         {
-            replyHandler.WaitReply(chatId);
-            Update replyUpdate = await replyHandler.DeHoldAsync(chatId);
+            ReplyHandler.WaitReply(chatId);
+            Update replyUpdate = await ReplyHandler.DeHoldAsync(chatId);
             return replyUpdate.Message;
         }
 

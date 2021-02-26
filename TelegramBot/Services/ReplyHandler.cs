@@ -5,19 +5,19 @@ using Telegram.Bot.Types;
 
 namespace tel_bot_net.Services
 {
-    public class ReplyHandlerService
+    static class ReplyHandler
     {
         private static List<long> IdsReplies = new List<long>();
         private static Dictionary<long,Update> Replies = new Dictionary<long, Update>();
 
         //помещаем id диалога и ссылку на поток в ожидание
-        public void WaitReply (long id)
+        public static void WaitReply (long id)
         {
             IdsReplies.Add(id);
         }
 
         //проверяем ожидаем ли мы этот update перехват если да
-        public bool Hold (Update update)
+        public static bool Hold (Update update)
         {
             long id = update.Message.Chat.Id;
 
@@ -33,7 +33,7 @@ namespace tel_bot_net.Services
 
 
         //выдаём update
-        public Update DeHold (long id)
+        public static Update DeHold (long id)
         {
             while (!Replies.ContainsKey(id))
             {
@@ -44,7 +44,7 @@ namespace tel_bot_net.Services
             return update;
         }
 
-        public async Task<Update> DeHoldAsync(long id)
+        public static async Task<Update> DeHoldAsync(long id)
         {
             return await Task.Run(() => DeHold(id));
         }

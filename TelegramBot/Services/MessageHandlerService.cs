@@ -7,12 +7,11 @@ namespace tel_bot_net.Services
 {
     public class MessageHandlerService
     {
-        private static ReplyHandlerService replyHandler;
+        //private static ReplyHandlerService replyHandler;
         private static DataBaseService dbSevice;
 
-        public MessageHandlerService(ReplyHandlerService _replyHandler, DataBaseService _dbSevice)
+        public MessageHandlerService( DataBaseService _dbSevice)
         {
-            replyHandler = _replyHandler;
             dbSevice = _dbSevice;
         }
 
@@ -32,7 +31,7 @@ namespace tel_bot_net.Services
             }
 
 
-            if (replyHandler.Hold(update))
+            if (ReplyHandler.Hold(update))
                 return true;
 
             var commands = Bot.commands;
@@ -46,7 +45,7 @@ namespace tel_bot_net.Services
 #if DEBUG
                     Console.WriteLine($"Start execute commant: {command.Name}");
 #endif
-                    await command.Execute(message, botClient, replyHandler, dbSevice);
+                    await command.Execute(message, botClient, dbSevice);
 #if DEBUG
                     Console.WriteLine($"Stop execute commant: {command.Name}");
 #endif

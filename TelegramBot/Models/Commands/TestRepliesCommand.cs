@@ -13,18 +13,18 @@ namespace tel_bot_net.Models.Commands
 
         public override string Description => "Test handling user's replies.";
 
-        public override async Task Execute(Message message, TelegramBotClient client, ReplyHandlerService replyHandler, DataBaseService dbService)
+        public override async Task Execute(Message message, TelegramBotClient client, DataBaseService dbService)
         {
             var chatId = message.Chat.Id;
             Thread T = Thread.CurrentThread;
 
             await client.SendTextMessageAsync(chatId, "Waiting yuour answer!");
-            Task.Run(() => RepliesHandling(chatId, client,replyHandler, dbService));
+            Task.Run(() => RepliesHandling(chatId, client, dbService));
         }
 
-        protected override async Task RepliesHandling(long chatId, TelegramBotClient client, ReplyHandlerService replyHandler, DataBaseService dbService)
+        protected override async Task RepliesHandling(long chatId, TelegramBotClient client, DataBaseService dbService)
         {
-            Message replyMessage = await WaitReply(chatId, replyHandler);
+            Message replyMessage = await WaitReply(chatId);
 
             await client.SendTextMessageAsync(chatId, $"Your answer was: {replyMessage.Text}");
         }

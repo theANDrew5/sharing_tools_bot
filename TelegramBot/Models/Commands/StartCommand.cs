@@ -19,7 +19,7 @@ namespace tel_bot_net.Models.Commands
         public override string Description => "Start command";
 
 
-        public override async Task Execute(Message message, TelegramBotClient client, ReplyHandlerService replyHandler, DataBaseService dbSevice)
+        public override async Task Execute(Message message, TelegramBotClient client,  DataBaseService dbSevice)
         {
             var chatId = message.Chat.Id;
 
@@ -35,7 +35,7 @@ namespace tel_bot_net.Models.Commands
                 new KeyboardButton{ Text = "Отмена"}
                     }, oneTimeKeyboard: true)
                     );
-                Task.Run(() => RepliesHandling(chatId, client, replyHandler, dbSevice));
+                Task.Run(() => RepliesHandling(chatId, client, dbSevice));
             }
             else
             {
@@ -51,9 +51,9 @@ namespace tel_bot_net.Models.Commands
         }
 
 
-        protected override async Task RepliesHandling(long chatId, TelegramBotClient client, ReplyHandlerService replyHandler, DataBaseService dbService)
+        protected override async Task RepliesHandling(long chatId, TelegramBotClient client, DataBaseService dbService)
         {
-            Message message = await WaitReply(chatId, replyHandler);
+            Message message = await WaitReply(chatId);
 
             if (message.Text == "Отмена")
                 await client.SendTextMessageAsync(chatId, "Запрос на регистрацию отклонён.\n" +
@@ -68,7 +68,7 @@ namespace tel_bot_net.Models.Commands
                     replyMarkup: new ReplyKeyboardRemove()
                     );
 
-                message = await WaitReply(chatId, replyHandler);
+                message = await WaitReply(chatId);
 
                 if (message.Text != null)
                 {

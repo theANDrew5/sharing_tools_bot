@@ -14,14 +14,14 @@ namespace tel_bot_net.Models.Callbacks
 
         public abstract string ButtonName { get; } // текст на кнопке
 
-        public abstract Task Execute(CallbackQuery callback, TelegramBotClient client, ReplyHandlerService replyHandler, DataBaseService dbService);
+        public abstract Task Execute(CallbackQuery callback, TelegramBotClient client, DataBaseService dbService);
 
-        protected abstract Task RepliesHandling(long chatId, TelegramBotClient client, ReplyHandlerService replyHandler, DataBaseService dbService);
+        protected abstract Task RepliesHandling(long chatId, TelegramBotClient client, DataBaseService dbService);
 
-        protected async Task<Message> WaitReply(long chatId, ReplyHandlerService replyHandler)
+        protected async Task<Message> WaitReply(long chatId)
         {
-            replyHandler.WaitReply(chatId);
-            Update replyUpdate = await replyHandler.DeHoldAsync(chatId);
+            ReplyHandler.WaitReply(chatId);
+            Update replyUpdate = await ReplyHandler.DeHoldAsync(chatId);
             return replyUpdate.Message;
         }
 

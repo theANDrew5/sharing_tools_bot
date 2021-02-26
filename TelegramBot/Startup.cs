@@ -11,8 +11,6 @@ namespace tel_bot_net
 {
     public class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
 
         public Startup(IConfiguration config)
         {
@@ -23,10 +21,6 @@ namespace tel_bot_net
 
         public void ConfigureServices(IServiceCollection services)// подключение веб сервисов
         {
-            //string connection = Configuration.GetConnectionString("DefaultConnection");
-
-            //services.AddDbContext<BotDbContext>(options =>
-            //options.UseSqlServer(connection));
 
             services.
                 AddControllers().
@@ -36,7 +30,7 @@ namespace tel_bot_net
             services.AddTransient<MessageHandlerService>();//Сервис перехвата сообщений
             services.AddTransient<CallbackHandlerService>();//Сервис перехвата нажатий кнопок
             services.AddTransient<DataBaseService>();//Сервис базы данных
-            services.AddSingleton<ReplyHandlerService>();//Сервис перехвата и хранения сообщений
+            //services.AddSingleton<ReplyHandlerService>();//Сервис перехвата и хранения сообщений
 
         }
 
