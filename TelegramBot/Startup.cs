@@ -4,10 +4,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
-using tel_bot_net.Models;
-using tel_bot_net.Services;
+using TelegramBot.Models;
+using TelegramBot.Services;
 
-namespace tel_bot_net
+namespace TelegramBot
 {
     public class Startup
     {

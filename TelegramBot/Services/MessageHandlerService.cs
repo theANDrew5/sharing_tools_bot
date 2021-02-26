@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Telegram.Bot.Types;
-using tel_bot_net.Models;
-using tel_bot_net.Singletones;
+using TelegramBot.Models;
+using TelegramBot.Singletones;
 
-namespace tel_bot_net.Services
+namespace TelegramBot.Services
 {
     public class MessageHandlerService
     {

@@ -6,11 +6,11 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
-using tel_bot_net.Models;
+using TelegramBot.Models;
 
 
 
-namespace tel_bot_net
+namespace TelegramBot
 {
 
     public class Program

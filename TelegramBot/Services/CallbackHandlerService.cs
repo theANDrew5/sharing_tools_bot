@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Telegram.Bot.Types;
-using tel_bot_net.Models;
+using TelegramBot.Models;
 
-namespace tel_bot_net.Services
+namespace TelegramBot.Services
 {
     public class CallbackHandlerService
     {

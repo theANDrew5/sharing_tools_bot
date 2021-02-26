@@ -3,9 +3,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
-using tel_bot_net.Services;
+using TelegramBot.Services;
 
-namespace tel_bot_net.Models.Commands
+namespace TelegramBot.Models.Commands
 {
     public class TestRepliesCommand : Command
     {

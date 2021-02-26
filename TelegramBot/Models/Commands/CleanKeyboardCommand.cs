@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using tel_bot_net.Services;
+using TelegramBot.Services;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 
-namespace tel_bot_net.Models.Commands
+namespace TelegramBot.Models.Commands
 {
     public class CleanKeyboardCommand : Command
     {

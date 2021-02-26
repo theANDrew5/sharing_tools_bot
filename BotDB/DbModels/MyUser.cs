@@ -1,5 +1,7 @@
 ﻿//модель пользователя
 
+using System.Collections.Generic;
+
 namespace BotDB.DbModels
 {
     public class MyUser
@@ -8,6 +10,8 @@ namespace BotDB.DbModels
         public string Name { get; set; }
         public string PhoneNumber { get; set; }
         public long ChatId { get; set; }// chat id из бота
+
+        public List<Transaction> Transactions { get; set; } = new List<Transaction>();
 
     }
 }

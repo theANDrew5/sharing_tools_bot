@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using BotDB;
 using BotDB.DbModels;
 
-namespace tel_bot_net.Singletones
+
+namespace TelegramBot.Singletones
 {
     public class DBMethods
     {
@@ -31,35 +33,54 @@ namespace tel_bot_net.Singletones
             }
 
         }
-
-        //public async  Task<List<long>> getUsersList()
-        //{
-        //    using (var db = new BotDbContext())
-        //    {
-        //        db.Users.
-        //    }
-        //}
-
-        public bool UserCheck (long chatID)
+        
+        public MyUser GetUser (long chatID)
         {
             using (var db = new BotDbContext())
             {
-                //var userId = from user in db.Users.
                 try
                 {
-                    //int userId = db.Users.Where(u => u.ChatId == chatID).Select(u => u.Id).Single();
-                    if (db.Users
-                        .Where(u => u.ChatId == chatID)
-                        .Select(u => u.Id).Single() > 0)
-                        return true;
-                    return false;
+                    return db.Users.
+                        Where(user => user.ChatId == chatID).
+                        Single();
                 }
                 catch (InvalidOperationException)
                 {
-                    return false;
+                    return null;
+                }    
+            }
+        }
+
+        public Tool GetTool (int toolId)
+        {
+            using (var db = new BotDbContext())
+            {
+                try
+                {
+                    return db.Tools.
+                        Where(tool => tool.Id == toolId).
+                        Single();
+                }
+                catch (InvalidOperationException)
+                {
+                    return null;
                 }
             }
         }
 
+        public bool AddTransaction(long userId, int toolId)
+        {
+            using (var db = new BotDbContext())
+            {
+                MyUser user = GetUser(userId);
+                Tool tool = db.Tools.Where(t => t.Id == toolId).Single();
+                Transaction transaction = new Transaction { User = user, UserId=user.Id, Tool = tool, ToolId=tool.Id, DateTimeOpen = DateTime.Now };
+                db.Transactions.Add(transaction);
+                if (db.SaveChanges() > 0)
+                    return true;
+                else
+                    return false;
+            }
+        }
     }
 }

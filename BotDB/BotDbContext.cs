@@ -9,13 +9,12 @@ namespace BotDB
     {
         public DbSet<MyUser> Users { get; set; }// Таблица пользователей
         public DbSet<Tool> Tools { get; set; }//таблица инструментов
-        public DbSet<OpenTransaction> OpenTransactions { get; set; }//таблица взятий инструментов
-        public DbSet<CloseTransaction> CloseTransactions { get; set; }//таблица возвращений инструментов
+        public DbSet<Transaction> Transactions { get; set; }//таблица взятий инструментов
 
 
         public BotDbContext()
         {
-            //Database.EnsureCreated();// создаем базу данных при первом обращении
+            Database.EnsureCreated();// создаем базу данных при первом обращении
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

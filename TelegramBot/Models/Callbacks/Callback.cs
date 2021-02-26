@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
-using tel_bot_net.Singletones;
+using TelegramBot.Singletones;
 
-namespace tel_bot_net.Models.Callbacks
+namespace TelegramBot.Models.Callbacks
 {
     public abstract class Callback
     {

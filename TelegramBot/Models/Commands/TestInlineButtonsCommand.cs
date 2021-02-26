@@ -8,7 +8,7 @@ using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
-namespace tel_bot_net.Models.Commands
+namespace TelegramBot.Models.Commands
 {
     public class TestInlineButtonsCommand : Command
     {

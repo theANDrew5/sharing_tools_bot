@@ -2,11 +2,11 @@
 using System.Threading.Tasks;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
-using tel_bot_net.Services;
+using TelegramBot.Services;
 
 
 
-namespace tel_bot_net.Controllers
+namespace TelegramBot.Controllers
 {
     [Route("api/update")]
     [ApiController]

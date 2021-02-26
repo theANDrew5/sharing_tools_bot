@@ -7,7 +7,7 @@ using Telegram.Bot.Types.ReplyMarkups;
 using BotDB.DbModels;
 
 
-namespace tel_bot_net.Models.Commands
+namespace TelegramBot.Models.Commands
 {
     public class StartCommand : Command
     {
@@ -21,7 +21,9 @@ namespace tel_bot_net.Models.Commands
         {
             var chatId = message.Chat.Id;
 
-            if (!dBMethods.UserCheck(chatId))
+            MyUser user = dBMethods.GetUser(chatId);
+
+            if (user==null)
             {
                 await client.SendTextMessageAsync(chatId,
                     "Привет! Для начала работы тебе необходимо зарегистрироваться.\n" +
@@ -29,8 +31,8 @@ namespace tel_bot_net.Models.Commands
                     "Если ты согласен нажми ОК, если не согласен нажми Отмена.\n",
                     replyMarkup: new ReplyKeyboardMarkup(new KeyboardButton[]
                     {
-                new KeyboardButton{ Text = "Ok", RequestContact = true},
-                new KeyboardButton{ Text = "Отмена"}
+                        new KeyboardButton{ Text = "Ok", RequestContact = true},
+                        new KeyboardButton{ Text = "Отмена"}
                     }, oneTimeKeyboard: true)
                     );
                 Task.Run(() => RepliesHandling(chatId, client));
@@ -38,7 +40,7 @@ namespace tel_bot_net.Models.Commands
             else
             {
                 await client.SendTextMessageAsync(chatId,
-                    $"Привет! {message.Chat.FirstName}\n" +
+                    $"Привет! {user.Name}.\n" +
                     "Вот функции, которыми ты можешь воспользоваться:\n",
                     replyMarkup: Bot.GetFuncKeyboard());
                 await client.SendTextMessageAsync(chatId,

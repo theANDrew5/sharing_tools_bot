@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Telegram.Bot.Types;
 
-namespace tel_bot_net.Singletones
+namespace TelegramBot.Singletones
 {
      public class ReplyHandler
     {

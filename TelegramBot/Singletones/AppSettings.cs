@@ -1,7 +1,7 @@
 ﻿//настройки
 
 
-namespace tel_bot_net.Models
+namespace TelegramBot.Models
 {
     public static class AppSettings
     {

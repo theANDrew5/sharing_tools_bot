@@ -6,11 +6,11 @@ using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
-using tel_bot_net.Models.Commands;
-using tel_bot_net.Models.Callbacks;
+using TelegramBot.Models.Commands;
+using TelegramBot.Models.Callbacks;
 
 
-namespace tel_bot_net.Models
+namespace TelegramBot.Models
 {
     public static class Bot
     {
@@ -30,7 +30,8 @@ namespace tel_bot_net.Models
         private static List<Callback> callbackList = new List<Callback>() 
         {
             //функуии добавлять сдесь
-            new ToolShareCallback()
+            new ToolShareCallback(),
+            new ToolReturnCallback()
         };
         public static IReadOnlyList<Callback> callbacks => callbackList.AsReadOnly();//список колбеков
 
