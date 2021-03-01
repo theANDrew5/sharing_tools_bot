@@ -11,7 +11,7 @@ namespace BotDB.DbModels
         public string PhoneNumber { get; set; }
         public long ChatId { get; set; }// chat id из бота
 
-        public List<Transaction> Transactions { get; set; } = new List<Transaction>();
+        public List<Transaction> Transactions { get; set; }
 
     }
 }

@@ -7,13 +7,6 @@ namespace BotDB.DbModels
     {
         public int Id { get; set; }
 
-        public int UserId { get; set; }
-        [ForeignKey("UserId")]
-        public MyUser User { get; set; }
-        public int ToolId { get; set; }
-        [ForeignKey("ToolId")]
-        public Tool Tool { get; set; }
-
         public string ImageOpenName { get; set; }
 
         public DateTime DateTimeOpen { get; set; }
@@ -21,6 +14,12 @@ namespace BotDB.DbModels
         public string ImageCloseName { get; set; }
 
         public DateTime? DateTimeClose { get; set; }
+
+        public int UserId { get; set; }
+        public int ToolId { get; set; }
+
+        public MyUser User { get; set; }
+        public Tool Tool { get; set; }
 
 
     }

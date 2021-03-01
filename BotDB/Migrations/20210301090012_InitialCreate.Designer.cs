@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BotDB.Migrations
 {
     [DbContext(typeof(BotDbContext))]
-    [Migration("20210226075325_One_Transaction_Table")]
-    partial class One_Transaction_Table
+    [Migration("20210301090012_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

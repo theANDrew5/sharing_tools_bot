@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using TelegramBot.Singletones;
+using BotDB;
 
 namespace TelegramBot.Models.Commands
 {

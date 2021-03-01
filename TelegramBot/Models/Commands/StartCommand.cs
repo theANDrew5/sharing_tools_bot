@@ -44,7 +44,7 @@ namespace TelegramBot.Models.Commands
                     "Вот функции, которыми ты можешь воспользоваться:\n",
                     replyMarkup: Bot.GetFuncKeyboard());
                 await client.SendTextMessageAsync(chatId,
-                    "Если ты не знаешь как пользоваться функцией введи команду: /aboutfunctions\n"
+                    "Если ты не знаешь как пользоваться функцией введи команду:\n/aboutfunctions\n"
                     );
 
             }
@@ -74,7 +74,13 @@ namespace TelegramBot.Models.Commands
                 {
                     newUser.Name = message.Text;
                     if(await dBMethods.AddUser(newUser))
-                        await client.SendTextMessageAsync(chatId, "Отлично! Теперь ты зарегистрирован и можешь пользоваться функционалом этого бота.");
+                        await client.SendTextMessageAsync(chatId,
+                            $"Привет! {newUser.Name}.\n" +
+                            "Вот функции, которыми ты можешь воспользоваться:\n",
+                            replyMarkup: Bot.GetFuncKeyboard());
+                        await client.SendTextMessageAsync(chatId,
+                            "Если ты не знаешь как пользоваться функцией введи команду:\n/aboutfunctions\n"
+                            );
                 }
 
             }

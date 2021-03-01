@@ -5,6 +5,7 @@ using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 using TelegramBot.Singletones;
+using BotDB;
 
 namespace TelegramBot.Models.Callbacks
 {

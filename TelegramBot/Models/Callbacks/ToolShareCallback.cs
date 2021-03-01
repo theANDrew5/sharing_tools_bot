@@ -116,7 +116,7 @@ namespace TelegramBot.Models.Callbacks
                 {
                     case "Продолжить":
                         Transaction transaction = new Transaction { User = user, Tool = tool, DateTimeOpen = DateTime.Now };
-                        if (dBMethods.AddTransaction(user.ChatId, tool.Id))
+                        if (dBMethods.AddTransaction(transaction))
                         {
                             await client.SendTextMessageAsync(chatId,
                                 $"Отлично!. Записали {user.Name} взял {tool.Name}.\n" +

@@ -11,7 +11,7 @@ namespace BotDB.DbModels
 
         public string InventoryNumber { get; set; }
 
-        public List<Transaction> Transactions { get; set; } = new List<Transaction>();
+        public List<Transaction> Transactions { get; set; }
         
 
 
