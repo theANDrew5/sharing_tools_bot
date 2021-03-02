@@ -31,7 +31,8 @@ namespace TelegramBot.Models
         {
             //функуии добавлять сдесь
             new ToolShareCallback(),
-            new ToolReturnCallback()
+            new ToolReturnCallback(),
+            new ToolReturnIdCallback()
         };
         public static IReadOnlyList<Callback> callbacks => callbackList.AsReadOnly();//список колбеков
 
@@ -74,7 +75,10 @@ namespace TelegramBot.Models
             
             foreach (var callback in callbackList)
             {
-                keyboard.Add(new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(callback.ButtonName, callback.Name)});
+                if (callback.ButtonName != null)
+                {
+                    keyboard.Add(new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(callback.ButtonName, callback.Name) });
+                }
             }
             return new InlineKeyboardMarkup(keyboard);
         }

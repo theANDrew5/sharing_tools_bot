@@ -12,7 +12,7 @@ namespace TelegramBot.Models.Commands
     {
 
         private ReplyHandler replyHandler = ReplyHandler.GetInstance();
-        protected DBMethods dBMethods = DBMethods.GetInstance();
+        protected DBMethods dB = DBMethods.GetInstance();
         public abstract string Name { get; }
 
         public abstract string Description { get; }

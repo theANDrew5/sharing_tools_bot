@@ -21,7 +21,7 @@ namespace TelegramBot.Models.Commands
         {
             var chatId = message.Chat.Id;
 
-            MyUser user = dBMethods.GetUser(chatId);
+            MyUser user = dB.GetUser(chatId);
 
             if (user==null)
             {
@@ -57,8 +57,8 @@ namespace TelegramBot.Models.Commands
 
             if (message.Text == "Отмена")
                 await client.SendTextMessageAsync(chatId, "Запрос на регистрацию отклонён.\n" +
-                    "Пока вы не зарегистрированы, вы не можете пользоваться функционалом этого бота.\n" +
-                    "Вы всегда можете зарегистрироваться набрав комманду /start",
+                    "Пока ты не зарегистрирован, ты не можешь пользоваться функционалом этого бота.\n" +
+                    "Ты всегда можешь зарегистрироваться набрав комманду /start",
                     replyMarkup: new ReplyKeyboardRemove()
                     );
             else if (message.Contact != null)
@@ -73,7 +73,7 @@ namespace TelegramBot.Models.Commands
                 if (message.Text != null)
                 {
                     newUser.Name = message.Text;
-                    if(await dBMethods.AddUser(newUser))
+                    if(await dB.AddUser(newUser))
                         await client.SendTextMessageAsync(chatId,
                             $"Привет! {newUser.Name}.\n" +
                             "Вот функции, которыми ты можешь воспользоваться:\n",

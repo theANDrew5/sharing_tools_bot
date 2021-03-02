@@ -39,6 +39,7 @@ namespace BotDB
                 try
                 {
                     return db.Users
+                        .Include(u=>u.Transactions)
                         .Where(u => u.Id == userId)
                         .Single();
                 }
@@ -80,9 +81,10 @@ namespace BotDB
             {
                 try
                 {
-                    return db.Users.
-                        Where(user => user.ChatId == chatID).
-                        Single();
+                    return db.Users
+                        .Include(u=>u.Transactions)
+                        .Where(user => user.ChatId == chatID)
+                        .Single();
                 }
                 catch (InvalidOperationException)
                 {
@@ -91,15 +93,17 @@ namespace BotDB
             }
         }
 
+
         public Tool GetTool (int toolId)
         {
             using (var db = new BotDbContext())
             {
                 try
                 {
-                    return db.Tools.
-                        Where(tool => tool.Id == toolId).
-                        Single();
+                    return db.Tools
+                        .Include(t=>t.Transactions)
+                        .Where(tool => tool.Id == toolId)
+                        .Single();
                 }
                 catch (InvalidOperationException)
                 {
@@ -108,12 +112,15 @@ namespace BotDB
             }
         }
 
-        public bool AddTransaction(MyUser _user, Tool _tool, Transaction transaction)
+
+        public bool OpenTransaction(MyUser _user, Tool _tool)
         {
             using (var db = new BotDbContext())
             {
-                var user = db.Users.Include(u=>u.Transactions).Where(u=>u.Id==_user.Id).Single();
-                var tool = db.Tools.Include(t=>t.Transactions).Where(t=>t.Id==_tool.Id).Single();
+                Transaction transaction = new Transaction { DateTimeOpen = DateTime.Now };
+
+                var user = db.Users.Include(u => u.Transactions).Where(u => u.Id == _user.Id).Single();
+                var tool = db.Tools.Include(t => t.Transactions).Where(t => t.Id == _tool.Id).Single();
 
                 user.Transactions.Add(transaction);
                 tool.Transactions.Add(transaction);
@@ -124,5 +131,44 @@ namespace BotDB
                     return false;
             }
         }
+
+        public bool CloseTransaction(MyUser user, Tool tool)
+        {
+            using (var db = new BotDbContext())
+            {
+                Transaction transaction = db.Transactions
+                                            .Where(t => t.UserId == user.Id && t.ToolId == tool.Id)
+                                            .SingleOrDefault();
+                if (transaction != null)
+                {
+                    transaction.DateTimeClose = DateTime.Now;
+                    if (db.SaveChanges() > 0)
+                        return true;
+                }
+                return false;
+            }
+        }
+
+        public Transaction GetOpenTransaction (int toolId)
+        {
+            using (var db = new BotDbContext())
+            {
+                    return db.Transactions
+                        .Where(t => t.ToolId == toolId && t.DateTimeClose != null)
+                        .SingleOrDefault();
+            }
+        }
+
+        public List<Transaction> GetOpenTransactions(long chatId)
+        {
+            using (var db = new BotDbContext())
+            {
+                return db.Transactions
+                    .Include(t=>t.Tool)
+                    .Where(t => t.User.ChatId == chatId && t.DateTimeClose == null)
+                    .ToList();
+            }
+        }
+
     }
 }

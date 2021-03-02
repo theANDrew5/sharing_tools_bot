@@ -49,10 +49,10 @@ namespace BotDB
             db.InitialBase();
 
             MyUser user = db.GetUser((int) 1);
-            Tool tool = db.GetTool(1);
+            Tool tool = db.GetTool(2);
 
             Transaction transaction = new Transaction { DateTimeOpen = DateTime.Now};
-            db.AddTransaction(user, tool, transaction);
+            db.OpenTransaction(user, tool);
 
             Console.WriteLine("OK");
         }

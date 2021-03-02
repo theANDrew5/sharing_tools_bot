@@ -61,7 +61,6 @@ namespace TelegramBot.Models.Callbacks
                                 replyMarkup: new ReplyKeyboardRemove());
                             break;
                     }
-
                     break;
 
 
@@ -74,7 +73,6 @@ namespace TelegramBot.Models.Callbacks
                         "OK, отмена.\n",
                         replyMarkup: new ReplyKeyboardRemove());
                     break;
-
             }
                         
 
@@ -90,8 +88,8 @@ namespace TelegramBot.Models.Callbacks
             Message message = await WaitReply(chatId);
             int toolId = Int32.Parse(message.Text);
 
-            MyUser user = dBMethods.GetUser(chatId);
-            Tool tool = dBMethods.GetTool(toolId);
+            MyUser user = dB.GetUser(chatId);
+            Tool tool = dB.GetTool(toolId);
 
             if (tool==null)
                 await client.SendTextMessageAsync(chatId,
@@ -100,23 +98,34 @@ namespace TelegramBot.Models.Callbacks
                     replyMarkup: new ReplyKeyboardRemove());
             else
             {
-                await client.SendTextMessageAsync(chatId,
-                    "Проверь данные.\n"+
-                    $"Наименование: {tool.Name}\n"+
-                    $"Инвентарный номер: {tool.InventoryNumber}",
-                    replyMarkup: new ReplyKeyboardMarkup(new KeyboardButton[]
-                    {
-                        new KeyboardButton { Text = "Продолжить" },
-                        new KeyboardButton { Text = "Отмена" }
-                    }, oneTimeKeyboard: true)
-                    );
-                message = await WaitReply(chatId);
+                if (dB.GetOpenTransaction(tool.Id) == null)
+                {
+                    await client.SendTextMessageAsync(chatId,
+                        "Проверь данные.\n" +
+                        $"Наименование: {tool.Name}\n" +
+                        $"Инвентарный номер: {tool.InventoryNumber}",
+                        replyMarkup: new ReplyKeyboardMarkup(new KeyboardButton[]
+                        {
+                                            new KeyboardButton { Text = "Продолжить" },
+                                            new KeyboardButton { Text = "Отмена" }
+                        }, oneTimeKeyboard: true)
+                        );
+                    message = await WaitReply(chatId);
+                }
+                else
+                {
+                    await client.SendTextMessageAsync(chatId,
+                        "Это оборудование сейчас выдано.\n" +
+                        "Если это не так обратись к администратору."
+                        );
+                    return;
+                }
+
 
                 switch (message.Text)
                 {
                     case "Продолжить":
-                        Transaction transaction = new Transaction { User = user, Tool = tool, DateTimeOpen = DateTime.Now };
-                        if (dBMethods.AddTransaction(transaction))
+                        if (dB.OpenTransaction(user, tool))
                         {
                             await client.SendTextMessageAsync(chatId,
                                 $"Отлично!. Записали {user.Name} взял {tool.Name}.\n" +

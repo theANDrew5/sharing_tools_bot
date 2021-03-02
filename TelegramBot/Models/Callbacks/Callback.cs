@@ -12,7 +12,7 @@ namespace TelegramBot.Models.Callbacks
     public abstract class Callback
     {
         private ReplyHandler replyHandler = ReplyHandler.GetInstance();
-        protected DBMethods dBMethods = DBMethods.GetInstance();
+        protected DBMethods dB = DBMethods.GetInstance();
 
         public abstract string Name { get; }// имя колбека и иего дата
 
