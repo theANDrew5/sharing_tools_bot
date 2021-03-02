@@ -22,7 +22,8 @@ namespace TelegramBot.Models
             new StartCommand(),
             new TestInlineButtonsCommand(),
             new TestRepliesCommand(),
-            new CleanKeyboardCommand()
+            new CleanKeyboardCommand(),
+            new TestPhotoCommand()
         };
         public static IReadOnlyList<Commands.Command> commands => commandList.AsReadOnly();//список команд
         private static List<BotCommand> botCommandList = new List<BotCommand>();
@@ -69,6 +70,7 @@ namespace TelegramBot.Models
 
         }
 
+        //кнопки основных функций
         public static InlineKeyboardMarkup GetFuncKeyboard()
         {
             List<InlineKeyboardButton[]> keyboard = new List<InlineKeyboardButton[]>();

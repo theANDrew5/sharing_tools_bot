@@ -49,6 +49,8 @@ namespace BotDB
                 }
             }
         }
+
+
 #endif
 
 
@@ -113,11 +115,11 @@ namespace BotDB
         }
 
 
-        public bool OpenTransaction(MyUser _user, Tool _tool)
+        public bool OpenTransaction(MyUser _user, Tool _tool, string photoName)
         {
             using (var db = new BotDbContext())
             {
-                Transaction transaction = new Transaction { DateTimeOpen = DateTime.Now };
+                Transaction transaction = new Transaction { DateTimeOpen = DateTime.Now , ImageOpenName = photoName };
 
                 var user = db.Users.Include(u => u.Transactions).Where(u => u.Id == _user.Id).Single();
                 var tool = db.Tools.Include(t => t.Transactions).Where(t => t.Id == _tool.Id).Single();
@@ -132,16 +134,18 @@ namespace BotDB
             }
         }
 
-        public bool CloseTransaction(MyUser user, Tool tool)
+        public bool CloseTransaction(MyUser user, Tool tool, string photoName)
         {
             using (var db = new BotDbContext())
             {
                 Transaction transaction = db.Transactions
-                                            .Where(t => t.UserId == user.Id && t.ToolId == tool.Id)
+                                            .Where(t => t.UserId == user.Id && t.ToolId == tool.Id && t.DateTimeClose == null)
                                             .SingleOrDefault();
                 if (transaction != null)
                 {
                     transaction.DateTimeClose = DateTime.Now;
+                    transaction.ImageCloseName = photoName;
+
                     if (db.SaveChanges() > 0)
                         return true;
                 }
@@ -154,7 +158,7 @@ namespace BotDB
             using (var db = new BotDbContext())
             {
                     return db.Transactions
-                        .Where(t => t.ToolId == toolId && t.DateTimeClose != null)
+                        .Where(t => t.ToolId == toolId && t.DateTimeClose == null)
                         .SingleOrDefault();
             }
         }

@@ -23,7 +23,7 @@ namespace TelegramBot.Models.Callbacks
             int messageId = callback.Message.MessageId;
 
             await client.EditMessageTextAsync(chatId, messageId,
-                "Список удалён.",
+                "Пришли фото оборудования, которое хочешь вернуть.",
                 replyMarkup: new InlineKeyboardMarkup(new InlineKeyboardButton[] { }));
 
             int toolId = Int32.Parse(callback.Data.Split(" ")[1]);
@@ -31,16 +31,31 @@ namespace TelegramBot.Models.Callbacks
             MyUser user = dB.GetUser(chatId);
             Tool tool = dB.GetTool(toolId);
 
-            if (dB.CloseTransaction(user, tool))
-                await client.SendTextMessageAsync(chatId,
-                    "Отлично!\n" +
-                    $"Записываем: {user.Name} вернул {tool.Name}"
-                    );
+            Task.Run(() => RepliesHandling(chatId, client, user, tool));
+
         }
 
         protected override Task RepliesHandling(long chatId, TelegramBotClient client)
         {
             throw new NotImplementedException();
+        }
+
+        protected async Task RepliesHandling(long chatId, TelegramBotClient client, MyUser user, Tool tool)
+        {
+            Message message = await WaitReply(chatId);
+
+            if (message.Type == Telegram.Bot.Types.Enums.MessageType.Photo)
+            {
+                if (dB.CloseTransaction(user, tool, message.Photo[2].FileId))
+                    await client.SendTextMessageAsync(chatId,
+                        "Отлично!\n" +
+                        $"Записываем: {user.Name} вернул {tool.Name}"
+                        );
+            }
+            else
+                await client.SendTextMessageAsync(chatId,
+                    "Неверный формат ответа!\n",
+                    replyMarkup: new ReplyKeyboardRemove());
         }
     }
 }

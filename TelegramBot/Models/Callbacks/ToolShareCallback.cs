@@ -125,13 +125,26 @@ namespace TelegramBot.Models.Callbacks
                 switch (message.Text)
                 {
                     case "Продолжить":
-                        if (dB.OpenTransaction(user, tool))
+                        await client.SendTextMessageAsync(chatId,
+                            "ОК, теперь отправь мне фотографию оборудования.\n",
+                            replyMarkup: new ReplyKeyboardRemove());
+
+                        message = await WaitReply(chatId);
+
+                        if (message.Type == Telegram.Bot.Types.Enums.MessageType.Photo)
                         {
-                            await client.SendTextMessageAsync(chatId,
-                                $"Отлично!. Записали {user.Name} взял {tool.Name}.\n" +
-                                "Не забудь вернуть!",
-                                replyMarkup: new ReplyKeyboardRemove());
+                            if (dB.OpenTransaction(user, tool, message.Photo[2].FileId))
+                            {
+                                await client.SendTextMessageAsync(chatId,
+                                    $"Отлично!. Записали {user.Name} взял {tool.Name}.\n" +
+                                    "Не забудь вернуть!",
+                                    replyMarkup: new ReplyKeyboardRemove());
+                            }
                         }
+                        else
+                            await client.SendTextMessageAsync(chatId,
+                                "Неверный формат ответа!\n",
+                                replyMarkup: new ReplyKeyboardRemove());
                         break;
 
                     case "Отмена":
