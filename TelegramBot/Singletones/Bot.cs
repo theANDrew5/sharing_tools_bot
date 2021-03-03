@@ -20,10 +20,11 @@ namespace TelegramBot.Models
         {
             //комманды добавлять сдесь
             new StartCommand(),
-            new TestInlineButtonsCommand(),
-            new TestRepliesCommand(),
+            new AboutFunctionsCommand(),
             new CleanKeyboardCommand(),
-            new TestPhotoCommand()
+            //new TestInlineButtonsCommand(),
+            //new TestRepliesCommand(),
+            //new TestPhotoCommand()
         };
         public static IReadOnlyList<Commands.Command> commands => commandList.AsReadOnly();//список команд
         private static List<BotCommand> botCommandList = new List<BotCommand>();
@@ -83,6 +84,21 @@ namespace TelegramBot.Models
                 }
             }
             return new InlineKeyboardMarkup(keyboard);
+        }
+
+        public static List<Callback> GetFunctions()
+        {
+            List<Callback> functions = new List<Callback>();
+
+            foreach (var callback in callbackList)
+            {
+                if (callback.ButtonName != null)
+                {
+                    functions.Add(callback);
+                }
+            }
+            return functions;
+
         }
 
 

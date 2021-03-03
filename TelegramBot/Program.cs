@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Net;
 
 using TelegramBot.Models;
 
@@ -73,9 +74,15 @@ namespace TelegramBot
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>(); //инициализация веб сервера, сервер описывается в классе Startup
-                });
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseStartup<Startup>();
+
+            });
+
+        //                .UseKestrel(options=>
+        //        {
+        //    options.Listen(IPAddress.Loopback, ListenOptionsHttpsExtensions);
+        //});
     }
 }

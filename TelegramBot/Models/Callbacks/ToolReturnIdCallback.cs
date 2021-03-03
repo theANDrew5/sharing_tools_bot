@@ -17,14 +17,26 @@ namespace TelegramBot.Models.Callbacks
 
         public override string ButtonName => null;//колбек не доступен в команде старт, по этому имени кнопки нет
 
+        public override string Description => throw new NotImplementedException();
+
         public override async Task Execute(CallbackQuery callback, TelegramBotClient client)
         {
             long chatId = callback.From.Id;
             int messageId = callback.Message.MessageId;
 
+            if (callback.Data.Contains("cancel"))
+            {
+                await client.EditMessageTextAsync(chatId, messageId,
+                    "OK, отмена.\n",
+                    replyMarkup: new InlineKeyboardMarkup(new InlineKeyboardButton[] { }));
+                return;
+            }
+
             await client.EditMessageTextAsync(chatId, messageId,
-                "Пришли фото оборудования, которое хочешь вернуть.",
+                "Список удалён!",
                 replyMarkup: new InlineKeyboardMarkup(new InlineKeyboardButton[] { }));
+            await client.SendTextMessageAsync(chatId,
+                "Пришли фото оборудования, которое хочешь вернуть.");
 
             int toolId = Int32.Parse(callback.Data.Split(" ")[1]);
 

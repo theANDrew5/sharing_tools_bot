@@ -18,6 +18,8 @@ namespace TelegramBot.Models.Callbacks
 
         public abstract string ButtonName { get; } // текст на кнопке
 
+        public abstract string Description { get; }
+
         public abstract Task Execute(CallbackQuery callback, TelegramBotClient client);
 
         protected abstract Task RepliesHandling(long chatId, TelegramBotClient client);

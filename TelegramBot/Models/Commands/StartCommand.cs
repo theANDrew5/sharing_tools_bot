@@ -14,7 +14,7 @@ namespace TelegramBot.Models.Commands
 
         public override string Name => "/start";
 
-        public override string Description => "Start command";
+        public override string Description => "Начать работу";
 
 
         public override async Task Execute(Message message, TelegramBotClient client)
