@@ -1,3 +1,3 @@
 # sharing_tools_bot
 
-System for tools sharing based on Telegram bot.
+System for tools sharing in lab based on Telegram bot.
